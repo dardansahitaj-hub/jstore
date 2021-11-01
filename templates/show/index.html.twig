@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="title p-1">{{article.title}}</h1>
+		<div class="img-fluid">
+			<img src="\assets\blog\images{{article.image}}" width="100%" alt="{{article.title}}">
+
+		</div>
+
+		<div class="content">
+			{# A ajouter aprés article.createdAt pour convertir la date au bon format :         | date("d/m/Y")          #}
+			{# A ajouter aprés article.createdAt pour convertir l'heure au bon format :         | date("H:i")            #}
+				<p class="date"> Ecrit le
+				{{article.createdAt }}
+				par
+				<span class="author">
+					{{article.author}}
+				</span>
+				<h2 class="title">{{article.title}}</h2>
+			</p>
+
+			<p class="content text-justify">{{article.content | raw}}
+				{#"raw" Permet de convertir texte en html structurer#}
+			</p>
+
+
+		</div>
+	</div>
+{% endblock %}
