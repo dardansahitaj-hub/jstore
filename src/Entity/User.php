@@ -47,7 +47,7 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -59,6 +59,7 @@ class User
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->createdAt = new \DateTime(); //Ajoute la date de l'ajout
     }
 
     public function getId(): ?int

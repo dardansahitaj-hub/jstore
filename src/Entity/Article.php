@@ -36,7 +36,7 @@ class Article
     private $image;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -89,7 +89,7 @@ class Article
     public function getImage(): ?string
     {
 
-        return "https://localhost:8000/public/assets/blog/images/" . $this->image;;
+        return $this->image;;
     }
 
     public function setImage(string $image): self

@@ -12,7 +12,7 @@
 			{# A ajouter aprés article.createdAt pour convertir la date au bon format :         | date("d/m/Y")          #}
 			{# A ajouter aprés article.createdAt pour convertir l'heure au bon format :         | date("H:i")            #}
 				<p class="date"> Ecrit le
-				{{article.createdAt }}
+				{{article.createdAt | date("d/m/Y") }}
 				par
 				<span class="author">
 					{{article.author}}

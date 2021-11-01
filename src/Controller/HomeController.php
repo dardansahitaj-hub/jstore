@@ -13,22 +13,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     private $repoArticle;
+    private $repoCategory;
 
-    public function __construct(ArticleRepository $repoArticle)
+    public function __construct(ArticleRepository $repoArticle, CategoryRepository $repoCategory)
     {
         $this->repoArticle = $repoArticle;
+        $this->repoCategory = $repoCategory;
     }
 
     /**
      * @Route("/", name="home")
      */
-    public function index(CategoryRepository $repoCategory): Response
+    public function index(): Response
     {
         // //Récupérer toutes les données de la BDD
         // $repo = $this->getDoctrine()->getRepository(Article::class);
         // Mit en commentaire car les paramètres on été mit directement dans la function index
 
-        $categories = $repoCategory->findAll();
+        $categories = $this->repoCategory->findAll();
         $articles = $this->repoArticle->findAll(); //findAll pour récupérer toutes les données
 
         return $this->render("home/index.html.twig", [
@@ -59,10 +61,19 @@ class HomeController extends AbstractController
     /**
      * @Route("/showArticle/{id}", name="show_article")
      */
-    public function showArticle(Category $category): Response
+    public function showArticle(?Category $category): Response
     {
-        $articles = $category->getArticles();
+        if ($category) {
+            $articles = $category->getArticles()->getValues();
+        } else {
+            return $this->redirectToRoute('home');
+        }
 
-        return $this->render("show/showArticle.html.twig");
+        $categories = $this->repoCategory->findAll();
+
+        return $this->render("show/showArticle.html.twig", [
+            'articles' => $articles,
+            'categories' => $categories,
+        ]);
     }
 }
